@@ -1,33 +1,18 @@
 const {
     app,
-    BrowserWindow,
-    ipcMain
+    BrowserWindow
 } = require('electron')
 const isDev = require('electron-is-dev')
 
 app.on('ready', () => {
-    require('devtron').install()
+    // require('devtron').install()
     let mainWindow = new BrowserWindow({
-        width: 1400,
-        height: 800,
+        width: 1024,
+        height: 680,
         webPreferences: {
             nodeIntegration: true
         }
     })
-    mainWindow.loadFile('index.html')
-    mainWindow.webContents.openDevTools()
-    ipcMain.on('message', (event, data) => {
-        console.log(data)
-        event.reply('reply', 'hello from main')
-    })
-
-    // let secondWindow = new BrowserWindow({
-    //     width: 400,
-    //     height: 300,
-    //     webPreferences: {
-    //         nodeIntegration: true
-    //     },
-    //     parent: mainWindow
-    // })
-    // secondWindow.loadFile('second.html')
+    const urlLocation = isDev ? 'http://localhost:3000' : 'falseUrl'
+    mainWindow.loadURL(urlLocation)
 })
